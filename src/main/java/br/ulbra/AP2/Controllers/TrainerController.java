@@ -1,9 +1,8 @@
 package br.ulbra.AP2.Controllers;
 
-import br.ulbra.AP2.Dto.Requests.PokemonResquestDTO;
-import br.ulbra.AP2.Dto.Responses.PokemonResponseDTO;
 import br.ulbra.AP2.Models.Pokemon;
 import br.ulbra.AP2.Services.PokemonService;
+import br.ulbra.AP2.Services.TrainerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,21 +10,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class PokemonController {
+public class TrainerController {
 
-    private final PokemonService pokemonService;
+    private final TrainerService trainerService;
 
-    public PokemonController(PokemonService pokemonService) {
-        this.pokemonService = pokemonService;
+    public TrainerController(TrainerService trainerService) {
+        this.trainerService = trainerService;
     }
 
-    @GetMapping("/pokemon")
-    public ResponseEntity<List<PokemonResponseDTO>> getPokemon() {
-        return ResponseEntity.status(HttpStatus.OK).body(this.pokemonService.getAllPokemons());
+    @GetMapping("/trainer")
+    public ResponseEntity<List<Pokemon>> getPokemon() {
+        return ResponseEntity.status(HttpStatus.OK).body(this.train.getAllPokemons());
     }
 
-    @PostMapping("/pokemon")
-    public ResponseEntity<String> addPokemon(@RequestBody PokemonResquestDTO pokemon) {
+    @PostMapping("/trainer")
+    public ResponseEntity<String> addPokemon(@RequestBody Pokemon pokemon) {
         this.pokemonService.addPokemon(pokemon);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

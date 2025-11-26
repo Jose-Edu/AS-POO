@@ -1,5 +1,7 @@
 package br.ulbra.AP2.Services;
 
+import br.ulbra.AP2.Dto.Requests.PokemonResquestDTO;
+import br.ulbra.AP2.Dto.Responses.PokemonResponseDTO;
 import br.ulbra.AP2.Models.Pokemon;
 import br.ulbra.AP2.Repositories.PokemonRepository;
 import org.springframework.stereotype.Service;
@@ -15,17 +17,20 @@ public class PokemonService {
         this.pokemonRepository = pokemonRepository;
     }
 
-    public List<Pokemon> getAllPokemons() {
-        return pokemonRepository.getPokemons();
+    public List<PokemonResponseDTO> getAllPokemons() {
+        List<Pokemon> pokemons = pokemonRepository.getPokemons();
+        List<PokemonResponseDTO> pokemonResponseDTOs = pokemons.stream().map(p -> new PokemonResponseDTO(p)).toList();
+
+        return pokemonResponseDTOs;
     }
 
     public Pokemon getPokemonById(int idPokemon) {
-        return pokemonRepository.getPokemonById(idPokemon);
+            return pokemonRepository.getPokemonById(idPokemon);
     }
 
-    public Pokemon getPokemonByName(String namePokemon) {
-        for (Pokemon pokemon : getAllPokemons()) {
-            if (pokemon.name.equals(namePokemon)) {
+    public PokemonResponseDTO getPokemonByName(String namePokemon) {
+        for (PokemonResponseDTO pokemon : getAllPokemons()) {
+            if (pokemon.getName().equals(namePokemon)) {
                 return pokemon;
             }
         }
@@ -40,24 +45,15 @@ public class PokemonService {
         return pokemonRepository.deletePokemon(idPokemon);
     }
 
-    public Pokemon addPokemon(Pokemon pokemon) {
-        return pokemonRepository.addPokemon(pokemon);
+    public void addPokemon(PokemonResquestDTO pokemon) {
+        Pokemon pokeAdd = new Pokemon(pokemon);
+        pokemonRepository.addPokemon(pokeAdd);
     }
 
-    public List<Pokemon> addPokemons(List<Pokemon> pokemons) {
-        List<Pokemon> idErrorPokemons = new ArrayList<>();
-
+    public void addPokemons(List<Pokemon> pokemons) {
         for (Pokemon pokemon : pokemons) {
-            if(pokemonRepository.addPokemon(pokemon) != null){
-                idErrorPokemons.add(pokemon);
-            }
+            pokemonRepository.addPokemon(pokemon);
         }
-
-        if(idErrorPokemons.isEmpty()){
-            return null;
-        }
-
-        return idErrorPokemons;
     }
 
 }

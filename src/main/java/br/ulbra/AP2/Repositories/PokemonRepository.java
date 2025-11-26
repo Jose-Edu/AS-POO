@@ -18,17 +18,13 @@ public class PokemonRepository {
         return pokemons;
     }
 
-    public Pokemon addPokemon(Pokemon pokemon) {
-        if (getPositionById(pokemon.pokeId) != -1) {
-            return pokemon;
-        }
+    public void addPokemon(Pokemon pokemon) {
         this.pokemons.add(pokemon);
-        return null;
     }
 
     private int getPositionById(int pokemonId) {
         for(int i = 0; i < pokemons.size(); i++) {
-            if (pokemonId == pokemons.get(i).pokeId) {
+            if (pokemonId == pokemons.get(i).getPokeId()) {
                 return i;
             }
         }
