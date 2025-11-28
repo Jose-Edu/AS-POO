@@ -23,12 +23,14 @@ public class TrainerRepository {
         trainers.add(trainer);
     }
 
-    public void removeTrainer(int id) {
+    public Trainer removeTrainer(int id) {
         for (Trainer trainer : trainers) {
             if (trainer.getId() == id) {
                 trainers.remove(trainer);
+                return trainer;
             }
         }
+        return null;
     }
 
     public Trainer getTrainerById(int id) {
@@ -40,9 +42,13 @@ public class TrainerRepository {
         return null;
     }
 
-    public void updateTrainer(Trainer trainer) {
-        trainers.remove(trainer);
-        trainers.add(trainer);
+    public Trainer setTrainer(Trainer trainerNew, int id) {
+        int trainerPos = getPositionById(id);
+        if (pokemonPos == -1) {
+            return null;
+        }
+        this.pokemons.set(pokemonPos, pokemon);
+        return pokemon;
     }
 
     public List<Pokemon> getPokemonsByTrainerId(int id) {

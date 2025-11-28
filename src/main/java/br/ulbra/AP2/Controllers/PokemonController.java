@@ -37,8 +37,8 @@ public class PokemonController {
     }
 
     @GetMapping("/pokemon/name/{pokemonName}")
-    public ResponseEntity<Pokemon> getPokemonByName(@PathVariable String pokemonName) {
-        Pokemon pokemon = pokemonService.getPokemonByName(pokemonName);
+    public ResponseEntity<PokemonResponseDTO> getPokemonByName(@PathVariable String pokemonName) {
+        PokemonResponseDTO pokemon = pokemonService.getPokemonByName(pokemonName);
         if (pokemon != null) {
             return ResponseEntity.status(HttpStatus.OK).body(pokemon);
         }
@@ -46,8 +46,8 @@ public class PokemonController {
     }
 
     @GetMapping("/pokemon/{id}")
-    public ResponseEntity<Pokemon> getPokemonById(@PathVariable int id) {
-        Pokemon poke = this.pokemonService.getPokemonById(id);
+    public ResponseEntity<PokemonResponseDTO> getPokemonById(@PathVariable int id) {
+        PokemonResponseDTO poke = this.pokemonService.getPokemonById(id);
         if (poke != null) {
             return ResponseEntity.status(HttpStatus.OK).body(poke);
         }
@@ -55,8 +55,8 @@ public class PokemonController {
     }
 
     @PutMapping("/pokemon/{id}")
-    public ResponseEntity<Pokemon> editPokemon(@PathVariable int id, @RequestBody Pokemon pokemon) {
-        Pokemon poke = this.pokemonService.updatePokemonById(pokemon, id);
+    public ResponseEntity<PokemonResponseDTO> editPokemon(@PathVariable int id, @RequestBody PokemonResquestDTO pokemon) {
+        PokemonResponseDTO poke = this.pokemonService.updatePokemonById(pokemon, id);
         if  (poke != null) {
             return ResponseEntity.status(HttpStatus.OK).body(poke);
         }
@@ -64,8 +64,8 @@ public class PokemonController {
     }
 
     @DeleteMapping("/pokemon/{id}")
-    public ResponseEntity<Pokemon> deletePokemon(@PathVariable int id) {
-        Pokemon poke = this.pokemonService.deletePokemonById(id);
+    public ResponseEntity<PokemonResponseDTO> deletePokemon(@PathVariable int id) {
+        PokemonResponseDTO poke = this.pokemonService.deletePokemonById(id);
         if  (poke != null) {
             return ResponseEntity.status(HttpStatus.OK).body(poke);
         }

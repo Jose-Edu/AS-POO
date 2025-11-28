@@ -24,8 +24,9 @@ public class PokemonService {
         return pokemonResponseDTOs;
     }
 
-    public Pokemon getPokemonById(int idPokemon) {
-            return pokemonRepository.getPokemonById(idPokemon);
+    public PokemonResponseDTO getPokemonById(int idPokemon) {
+        PokemonResponseDTO pokemon = new PokemonResponseDTO(pokemonRepository.getPokemonById(idPokemon));
+        return pokemon;
     }
 
     public PokemonResponseDTO getPokemonByName(String namePokemon) {
@@ -37,12 +38,15 @@ public class PokemonService {
         return null;
     }
 
-    public Pokemon updatePokemonById(Pokemon pokemon, int idPokemon) {
-        return pokemonRepository.setPokemon(pokemon, idPokemon);
+    public PokemonResponseDTO updatePokemonById(PokemonResquestDTO pokemon, int idPokemon) {
+        Pokemon newPokemon = new Pokemon(pokemon);
+        Pokemon poke = pokemonRepository.setPokemon(newPokemon, idPokemon);
+        return new PokemonResponseDTO(poke);
     }
 
-    public Pokemon deletePokemonById(int idPokemon) {
-        return pokemonRepository.deletePokemon(idPokemon);
+    public PokemonResponseDTO deletePokemonById(int idPokemon) {
+        Pokemon deletedPokemon = pokemonRepository.deletePokemon(idPokemon);
+        return new PokemonResponseDTO(deletedPokemon);
     }
 
     public void addPokemon(PokemonResquestDTO pokemon) {

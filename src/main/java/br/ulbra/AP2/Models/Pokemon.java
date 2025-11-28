@@ -25,7 +25,7 @@ public class Pokemon {
     public Pokemon(PokemonResquestDTO pokemon) {
         this.name = pokemon.getName();
         this.type = pokemon.getType();
-    };
+    }
 
     public String getName() {
         return name;

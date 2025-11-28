@@ -24,7 +24,7 @@ public class PokemonRepository {
 
     private int getPositionById(int pokemonId) {
         for(int i = 0; i < pokemons.size(); i++) {
-            if (pokemonId == pokemons.get(i).getPokeId()) {
+            if (pokemonId == pokemons.get(i).getId()) {
                 return i;
             }
         }

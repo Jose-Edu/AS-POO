@@ -1,6 +1,9 @@
 package br.ulbra.AP2.Controllers;
 
+import br.ulbra.AP2.Dto.Requests.TrainerRequestDTO;
+import br.ulbra.AP2.Dto.Responses.TrainerResponseDTO;
 import br.ulbra.AP2.Models.Pokemon;
+import br.ulbra.AP2.Models.Trainer;
 import br.ulbra.AP2.Services.PokemonService;
 import br.ulbra.AP2.Services.TrainerService;
 import org.springframework.http.HttpStatus;
@@ -19,54 +22,54 @@ public class TrainerController {
     }
 
     @GetMapping("/trainer")
-    public ResponseEntity<List<Pokemon>> getPokemon() {
-        return ResponseEntity.status(HttpStatus.OK).body(this.train.getAllPokemons());
+    public ResponseEntity<List<TrainerResponseDTO>> getTrainers() {
+        return ResponseEntity.status(HttpStatus.OK).body(this.trainerService.getAllTrainers());
     }
 
     @PostMapping("/trainer")
-    public ResponseEntity<String> addPokemon(@RequestBody Pokemon pokemon) {
-        this.pokemonService.addPokemon(pokemon);
+    public ResponseEntity<String> addTrainer(@RequestBody TrainerRequestDTO trainer) {
+        this.trainerService.addTrainer(trainer);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("/pokemon/list")
-    public ResponseEntity<String> addPokemons(@RequestBody List<Pokemon> pokemons) {
-        this.pokemonService.addPokemons(pokemons);
+    @PostMapping("/trainer/list")
+    public ResponseEntity<String> addTrainers(@RequestBody List<TrainerRequestDTO> trainers) {
+        this.trainerService.addTrainers(trainers);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("/pokemon/name/{pokemonName}")
-    public ResponseEntity<Pokemon> getPokemonByName(@PathVariable String pokemonName) {
-        Pokemon pokemon = pokemonService.getPokemonByName(pokemonName);
-        if (pokemon != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(pokemon);
+    @GetMapping("/trainer/name/{trainerName}")
+    public ResponseEntity<TrainerResponseDTO> getTrainerByName(@PathVariable String trainerName) {
+        TrainerResponseDTO trainer = trainerService.getTrainerByName(trainerName);
+        if (trainer != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(trainer);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @GetMapping("/pokemon/{id}")
-    public ResponseEntity<Pokemon> getPokemonById(@PathVariable int id) {
-        Pokemon poke = this.pokemonService.getPokemonById(id);
-        if (poke != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(poke);
+    @GetMapping("/trainer/{id}")
+    public ResponseEntity<TrainerResponseDTO> getTrainerById(@PathVariable int id) {
+        TrainerResponseDTO trainer = this.trainerService.getTrainerById(id);
+        if (trainer != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(trainer);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PutMapping("/pokemon/{id}")
-    public ResponseEntity<Pokemon> editPokemon(@PathVariable int id, @RequestBody Pokemon pokemon) {
-        Pokemon poke = this.pokemonService.updatePokemonById(pokemon, id);
-        if  (poke != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(poke);
+    @PutMapping("/trainer/{id}")
+    public ResponseEntity<TrainerResponseDTO> editTrainer(@PathVariable int id, @RequestBody TrainerRequestDTO trainerNew) {
+        TrainerResponseDTO trainer = this.trainerService.updateTrainerById(trainerNew, id);
+        if  (trainer != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(trainer);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @DeleteMapping("/pokemon/{id}")
-    public ResponseEntity<Pokemon> deletePokemon(@PathVariable int id) {
-        Pokemon poke = this.pokemonService.deletePokemonById(id);
-        if  (poke != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(poke);
+    @DeleteMapping("/trainer/{id}")
+    public ResponseEntity<TrainerResponseDTO> deleteTrainer(@PathVariable int id) {
+        TrainerResponseDTO trainer = this.trainerService.deleteTrainerById(id);
+        if  (trainer != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(trainer);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
