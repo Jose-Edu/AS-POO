@@ -32,21 +32,6 @@ public class TrainerController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("/trainer/list")
-    public ResponseEntity<String> addTrainers(@RequestBody List<TrainerRequestDTO> trainers) {
-        this.trainerService.addTrainers(trainers);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-    @GetMapping("/trainer/name/{trainerName}")
-    public ResponseEntity<TrainerResponseDTO> getTrainerByName(@PathVariable String trainerName) {
-        TrainerResponseDTO trainer = trainerService.getTrainerByName(trainerName);
-        if (trainer != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(trainer);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-
     @GetMapping("/trainer/{id}")
     public ResponseEntity<TrainerResponseDTO> getTrainerById(@PathVariable int id) {
         TrainerResponseDTO trainer = this.trainerService.getTrainerById(id);
@@ -66,11 +51,8 @@ public class TrainerController {
     }
 
     @DeleteMapping("/trainer/{id}")
-    public ResponseEntity<TrainerResponseDTO> deleteTrainer(@PathVariable int id) {
-        TrainerResponseDTO trainer = this.trainerService.deleteTrainerById(id);
-        if  (trainer != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(trainer);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<String> deleteTrainer(@PathVariable long id) {
+        this.trainerService.deleteTrainerById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Treinador deletado com sucesso!");
     }
 }

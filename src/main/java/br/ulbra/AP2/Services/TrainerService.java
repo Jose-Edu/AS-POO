@@ -2,7 +2,6 @@ package br.ulbra.AP2.Services;
 
 import br.ulbra.AP2.Dto.Requests.TrainerRequestDTO;
 import br.ulbra.AP2.Dto.Responses.TrainerResponseDTO;
-import br.ulbra.AP2.Models.Pokemon;
 import br.ulbra.AP2.Models.Trainer;
 import br.ulbra.AP2.Repositories.TrainerRepository;
 import org.springframework.stereotype.Service;
@@ -18,9 +17,9 @@ public class TrainerService {
         this.trainerRepository = trainerRepository;
     }
 
-    public List<TrainerResponseDTO> getTrainers() {
+    public List<TrainerResponseDTO> getAllTrainers() {
         List<TrainerResponseDTO>  trainersResponse = new ArrayList<>();
-        List<Trainer> trainers = trainerRepository.getTrainers();
+        List<Trainer> trainers = trainerRepository.findAll();
 
         trainers.forEach(trainer -> {
             trainersResponse.add(new TrainerResponseDTO(trainer));
@@ -31,22 +30,16 @@ public class TrainerService {
 
     public void addTrainer(TrainerRequestDTO trainer) {
         Trainer newTrainer = new Trainer(trainer);
-        trainerRepository.addTrainer(newTrainer);
+        trainerRepository.save(newTrainer);
     }
 
-    public TrainerResponseDTO deleteTrainerById(int id)
+    public void deleteTrainerById(long id)
     {
-        Trainer deletedTrainer = trainerRepository.removeTrainer(id);
-
-        if (deletedTrainer != null) {
-            return new TrainerResponseDTO(deletedTrainer);
-        }
-
-        return null;
+        trainerRepository.deleteById(id);
     }
 
-    public TrainerResponseDTO getTrainerById(int id){
-        Trainer trainer = trainerRepository.getTrainerById(id);
+    public TrainerResponseDTO getTrainerById(long id){
+        Trainer trainer = trainerRepository.findById(id).get();
 
         if (trainer != null) {
             return new TrainerResponseDTO(trainer);
@@ -55,11 +48,16 @@ public class TrainerService {
         return null;
     }
 
-    public void updateTrainerById(Trainer trainer) {
-        trainerRepository.updateTrainer(trainer);
+    public TrainerResponseDTO updateTrainerById(TrainerRequestDTO trainerNew, long id) {
+        Trainer newTrainer = new Trainer(trainerNew);
+        var tempTrainer = trainerRepository.findById(id);
+        if (tempTrainer.isEmpty()) {
+            return null;
+        }
+        Trainer trainer = tempTrainer.get();
+        trainer.setName(newTrainer.getName());
+        trainerRepository.save(trainer);
+        return new TrainerResponseDTO(trainer);
     }
 
-    public List<Pokemon> getPokemonsByTrainerId(int id) {
-        return trainerRepository.getPokemonsByTrainerId(id);
-    }
 }

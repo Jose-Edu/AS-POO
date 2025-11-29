@@ -3,10 +3,7 @@ package br.ulbra.AP2.Models;
 
 import br.ulbra.AP2.Dto.Requests.PokemonResquestDTO;
 import br.ulbra.AP2.Dto.Requests.TrainerRequestDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +12,11 @@ import java.util.List;
 public class Trainer {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String name;
+
+    @OneToMany(mappedBy = "trainer")
     private List<Pokemon> pokemons;
 
     public Trainer() {
@@ -34,11 +33,11 @@ public class Trainer {
         this.pokemons = new ArrayList<>();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

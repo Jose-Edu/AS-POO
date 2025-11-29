@@ -8,16 +8,20 @@ import jakarta.persistence.*;
 public class Pokemon {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String name;
     private List<String> type;
+
+    @ManyToOne
+    @JoinColumn(name="trainer_id")
+    private Trainer trainer;
 
     public Pokemon() {
 
     }
 
-    public Pokemon(String name, List<String> type, int pokeId) {
+    public Pokemon(String name, List<String> type) {
         this.name = name;
         this.type = type;
     }
@@ -39,11 +43,11 @@ public class Pokemon {
         this.type = type;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

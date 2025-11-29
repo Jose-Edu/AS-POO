@@ -7,18 +7,18 @@ import java.util.List;
 
 public class TrainerResponseDTO {
     private String name;
-    private List<Pokemon> pokemons;
+    private List<PokemonResponseDTO> pokemons;
 
     public TrainerResponseDTO() {}
 
     public TrainerResponseDTO(String name, List<Pokemon> pokemons) {
         this.name = name;
-        this.pokemons = pokemons;
+        this.pokemons = pokemons.stream().map(p -> new PokemonResponseDTO(p)).toList();
     }
 
     public TrainerResponseDTO(Trainer trainer) {
         this.name = trainer.getName();
-        this.pokemons = trainer.getPokemons();
+        this.pokemons = trainer.getPokemons().stream().map(p -> new PokemonResponseDTO(p)).toList();
     }
 
     public String getName() {
@@ -29,11 +29,11 @@ public class TrainerResponseDTO {
         this.name = name;
     }
 
-    public List<Pokemon> getPokemons() {
+    public List<PokemonResponseDTO> getPokemons() {
         return pokemons;
     }
 
-    public void setPokemons(List<Pokemon> pokemons) {
+    public void setPokemons(List<PokemonResponseDTO> pokemons) {
         this.pokemons = pokemons;
     }
 }

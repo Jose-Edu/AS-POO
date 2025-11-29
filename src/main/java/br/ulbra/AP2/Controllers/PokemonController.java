@@ -30,21 +30,6 @@ public class PokemonController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("/pokemon/list")
-    public ResponseEntity<String> addPokemons(@RequestBody List<Pokemon> pokemons) {
-        this.pokemonService.addPokemons(pokemons);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-    @GetMapping("/pokemon/name/{pokemonName}")
-    public ResponseEntity<PokemonResponseDTO> getPokemonByName(@PathVariable String pokemonName) {
-        PokemonResponseDTO pokemon = pokemonService.getPokemonByName(pokemonName);
-        if (pokemon != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(pokemon);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-
     @GetMapping("/pokemon/{id}")
     public ResponseEntity<PokemonResponseDTO> getPokemonById(@PathVariable int id) {
         PokemonResponseDTO poke = this.pokemonService.getPokemonById(id);
