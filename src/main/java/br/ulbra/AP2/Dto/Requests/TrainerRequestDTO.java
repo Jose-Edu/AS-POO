@@ -1,6 +1,5 @@
 package br.ulbra.AP2.Dto.Requests;
 
-import br.ulbra.AP2.Models.Pokemon;
 import br.ulbra.AP2.Models.Trainer;
 
 import java.util.List;

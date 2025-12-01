@@ -1,7 +1,5 @@
 package br.ulbra.AP2.Models;
 
-
-import br.ulbra.AP2.Dto.Requests.PokemonResquestDTO;
 import br.ulbra.AP2.Dto.Requests.TrainerRequestDTO;
 import jakarta.persistence.*;
 

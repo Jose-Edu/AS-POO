@@ -28,16 +28,6 @@ public class TrainerService {
         return trainersResponse;
     }
 
-    public void addTrainer(TrainerRequestDTO trainer) {
-        Trainer newTrainer = new Trainer(trainer);
-        trainerRepository.save(newTrainer);
-    }
-
-    public void deleteTrainerById(long id)
-    {
-        trainerRepository.deleteById(id);
-    }
-
     public TrainerResponseDTO getTrainerById(long id){
         Trainer trainer = trainerRepository.findById(id).get();
 
@@ -46,6 +36,16 @@ public class TrainerService {
         }
 
         return null;
+    }
+
+    public void addTrainer(TrainerRequestDTO trainer) {
+        Trainer newTrainer = new Trainer(trainer);
+        trainerRepository.save(newTrainer);
+    }
+
+    public void deleteTrainerById(long id)
+    {
+        trainerRepository.deleteById(id);
     }
 
     public TrainerResponseDTO updateTrainerById(TrainerRequestDTO trainerNew, long id) {

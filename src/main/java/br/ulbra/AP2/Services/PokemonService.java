@@ -2,52 +2,66 @@ package br.ulbra.AP2.Services;
 
 import br.ulbra.AP2.Dto.Requests.PokemonResquestDTO;
 import br.ulbra.AP2.Dto.Responses.PokemonResponseDTO;
+import br.ulbra.AP2.Dto.Responses.TrainerResponseDTO;
 import br.ulbra.AP2.Models.Pokemon;
-import br.ulbra.AP2.Repositories.PokemonRepository2;
+import br.ulbra.AP2.Models.Trainer;
+import br.ulbra.AP2.Repositories.PokemonRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PokemonService {
-    private final PokemonRepository2 pokemonRepository;
+    private final PokemonRepository pokemonRepository;
 
-    public PokemonService(PokemonRepository2 pokemonRepository) {
+    public PokemonService(PokemonRepository pokemonRepository) {
         this.pokemonRepository = pokemonRepository;
     }
 
     public List<PokemonResponseDTO> getAllPokemons() {
-        List<Pokemon> pokemons = pokemonRepository.getPokemons();
-        List<PokemonResponseDTO> pokemonResponseDTOs = pokemons.stream().map(p -> new PokemonResponseDTO(p)).toList();
 
-        return pokemonResponseDTOs;
+        List<PokemonResponseDTO>  pokemonsResponse = new ArrayList<>();
+        List<Pokemon> pokemons = pokemonRepository.findAll();
+
+        pokemons.forEach(pokemon -> {
+            pokemonsResponse.add(new PokemonResponseDTO(pokemon));
+        });
+
+        return pokemonsResponse;
     }
 
-    public PokemonResponseDTO getPokemonById(int idPokemon) {
-        PokemonResponseDTO pokemon = new PokemonResponseDTO(pokemonRepository.getPokemonById(idPokemon));
-        return pokemon;
+    public PokemonResponseDTO getPokemonById(long id) {
+        Pokemon pokemon = pokemonRepository.findById(id).get();
+
+        if (pokemon != null) {
+            return new PokemonResponseDTO(pokemon);
+        }
+
+        return null;
     }
 
-    public PokemonResponseDTO updatePokemonById(PokemonResquestDTO pokemon, int idPokemon) {
-        Pokemon newPokemon = new Pokemon(pokemon);
-        Pokemon poke = pokemonRepository.setPokemon(newPokemon, idPokemon);
-        return new PokemonResponseDTO(poke);
+    public PokemonResponseDTO updatePokemonById(PokemonResquestDTO pokemonNew, long id) {
+        Pokemon newPokemon = new Pokemon(pokemonNew);
+
+        var tempPokemon = pokemonRepository.findById(id);
+        if (tempPokemon.isEmpty()) {
+            return null;
+        }
+        Pokemon pokemon = tempPokemon.get();
+        pokemon.setName(newPokemon.getName());
+        pokemonRepository.save(pokemon);
+        return new PokemonResponseDTO(pokemon);
     }
 
-    public PokemonResponseDTO deletePokemonById(int idPokemon) {
-        Pokemon deletedPokemon = pokemonRepository.deletePokemon(idPokemon);
-        return new PokemonResponseDTO(deletedPokemon);
+    public void deletePokemonById(long idPokemon) {
+        pokemonRepository.deleteById(idPokemon);
     }
 
     public void addPokemon(PokemonResquestDTO pokemon) {
         Pokemon pokeAdd = new Pokemon(pokemon);
-        pokemonRepository.addPokemon(pokeAdd);
+        pokemonRepository.save(pokeAdd);
     }
 
-    public void addPokemons(List<Pokemon> pokemons) {
-        for (Pokemon pokemon : pokemons) {
-            pokemonRepository.addPokemon(pokemon);
-        }
-    }
 
 }

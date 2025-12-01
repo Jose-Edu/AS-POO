@@ -2,9 +2,6 @@ package br.ulbra.AP2.Controllers;
 
 import br.ulbra.AP2.Dto.Requests.TrainerRequestDTO;
 import br.ulbra.AP2.Dto.Responses.TrainerResponseDTO;
-import br.ulbra.AP2.Models.Pokemon;
-import br.ulbra.AP2.Models.Trainer;
-import br.ulbra.AP2.Services.PokemonService;
 import br.ulbra.AP2.Services.TrainerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

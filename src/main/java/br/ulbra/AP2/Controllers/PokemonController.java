@@ -2,7 +2,6 @@ package br.ulbra.AP2.Controllers;
 
 import br.ulbra.AP2.Dto.Requests.PokemonResquestDTO;
 import br.ulbra.AP2.Dto.Responses.PokemonResponseDTO;
-import br.ulbra.AP2.Models.Pokemon;
 import br.ulbra.AP2.Services.PokemonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +30,7 @@ public class PokemonController {
     }
 
     @GetMapping("/pokemon/{id}")
-    public ResponseEntity<PokemonResponseDTO> getPokemonById(@PathVariable int id) {
+    public ResponseEntity<PokemonResponseDTO> getPokemonById(@PathVariable long id) {
         PokemonResponseDTO poke = this.pokemonService.getPokemonById(id);
         if (poke != null) {
             return ResponseEntity.status(HttpStatus.OK).body(poke);
@@ -40,7 +39,7 @@ public class PokemonController {
     }
 
     @PutMapping("/pokemon/{id}")
-    public ResponseEntity<PokemonResponseDTO> editPokemon(@PathVariable int id, @RequestBody PokemonResquestDTO pokemon) {
+    public ResponseEntity<PokemonResponseDTO> editPokemon(@PathVariable long id, @RequestBody PokemonResquestDTO pokemon) {
         PokemonResponseDTO poke = this.pokemonService.updatePokemonById(pokemon, id);
         if  (poke != null) {
             return ResponseEntity.status(HttpStatus.OK).body(poke);
@@ -49,11 +48,8 @@ public class PokemonController {
     }
 
     @DeleteMapping("/pokemon/{id}")
-    public ResponseEntity<PokemonResponseDTO> deletePokemon(@PathVariable int id) {
-        PokemonResponseDTO poke = this.pokemonService.deletePokemonById(id);
-        if  (poke != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(poke);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<String> deletePokemon(@PathVariable long id) {
+        this.pokemonService.deletePokemonById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Treinador deletado com sucesso!");
     }
 }
