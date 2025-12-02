@@ -14,16 +14,17 @@ public class Pokemon {
     private List<String> type;
 
     @ManyToOne
+    @JoinColumn(name="trainer_id")
     private Trainer trainer;
 
     public Pokemon() {
 
     }
 
-    public Pokemon(PokemonResquestDTO pokemon) {
+    public Pokemon(PokemonResquestDTO pokemon,  Trainer trainer) {
         this.name = pokemon.getName();
         this.type = pokemon.getType();
-        this.trainer = pokemon.getTrainer();
+        this.trainer = trainer;
     }
 
     public String getName() {

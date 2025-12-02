@@ -4,22 +4,20 @@ import br.ulbra.AP2.Models.Pokemon;
 
 import java.util.List;
 
-public class PokemonResponseDTO {
+public class PokemonResponseDTOSlave {
     private Long id;
     private String name;
     private List<String> type;
-    private TrainerResponseDTOSlave trainer;
 
-    public PokemonResponseDTO() {}
+    public PokemonResponseDTOSlave() {}
 
-    public PokemonResponseDTO(Pokemon pokemon) {
+    public PokemonResponseDTOSlave(Pokemon pokemon) {
         this.id = pokemon.getId();
         this.name = pokemon.getName();
         this.type = pokemon.getType();
-        this.trainer = new TrainerResponseDTOSlave(pokemon.getTrainer());
     }
 
-    public PokemonResponseDTO(String name, List<String> type) {
+    public PokemonResponseDTOSlave(String name, List<String> type) {
         this.name = name;
         this.type = type;
     }
@@ -38,14 +36,6 @@ public class PokemonResponseDTO {
 
     public void setType(List<String> type) {
         this.type = type;
-    }
-
-    public TrainerResponseDTOSlave getTrainer() {
-        return trainer;
-    }
-
-    public void setTrainer(TrainerResponseDTOSlave trainer) {
-        this.trainer = trainer;
     }
 
     public Long getId() {

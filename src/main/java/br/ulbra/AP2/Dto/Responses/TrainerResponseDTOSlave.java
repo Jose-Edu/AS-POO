@@ -5,16 +5,18 @@ import br.ulbra.AP2.Models.Trainer;
 
 import java.util.List;
 
-public class TrainerResponseDTO {
+public class TrainerResponseDTOSlave {
     private String name;
-    private List<PokemonResponseDTOSlave> pokemons;
     private long id;
 
-    public TrainerResponseDTO() {}
+    public TrainerResponseDTOSlave() {}
 
-    public TrainerResponseDTO(Trainer trainer) {
+    public TrainerResponseDTOSlave(String name) {
+        this.name = name;
+    }
+
+    public TrainerResponseDTOSlave(Trainer trainer) {
         this.name = trainer.getName();
-        this.pokemons = trainer.getPokemons().stream().map(p -> new PokemonResponseDTOSlave(p)).toList();
         this.id = trainer.getId();
     }
 
@@ -26,14 +28,6 @@ public class TrainerResponseDTO {
         this.name = name;
     }
 
-    public List<PokemonResponseDTOSlave> getPokemons() {
-        return pokemons;
-    }
-
-    public void setPokemons(List<PokemonResponseDTOSlave> pokemons) {
-        this.pokemons = pokemons;
-    }
-
     public long getId() {
         return id;
     }
@@ -41,4 +35,5 @@ public class TrainerResponseDTO {
     public void setId(long id) {
         this.id = id;
     }
+
 }

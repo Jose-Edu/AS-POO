@@ -6,6 +6,7 @@ import br.ulbra.AP2.Dto.Responses.TrainerResponseDTO;
 import br.ulbra.AP2.Models.Pokemon;
 import br.ulbra.AP2.Models.Trainer;
 import br.ulbra.AP2.Repositories.PokemonRepository;
+import br.ulbra.AP2.Repositories.TrainerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,9 +15,12 @@ import java.util.List;
 @Service
 public class PokemonService {
     private final PokemonRepository pokemonRepository;
+    private final TrainerRepository trainerRepository;
 
-    public PokemonService(PokemonRepository pokemonRepository) {
+    public PokemonService(PokemonRepository pokemonRepository, TrainerRepository trainerRepository)
+    {
         this.pokemonRepository = pokemonRepository;
+        this.trainerRepository = trainerRepository;
     }
 
     public List<PokemonResponseDTO> getAllPokemons() {
@@ -41,10 +45,11 @@ public class PokemonService {
         return null;
     }
 
-    public PokemonResponseDTO updatePokemonById(PokemonResquestDTO pokemonNew, long id) {
-        Pokemon newPokemon = new Pokemon(pokemonNew);
+    public PokemonResponseDTO updatePokemonById(PokemonResquestDTO pokemonNew, long idPokemon) {
+        Trainer trainer = trainerRepository.findById(pokemonNew.getTrainerId()).get();
+        Pokemon newPokemon = new Pokemon(pokemonNew, trainer);
 
-        var tempPokemon = pokemonRepository.findById(id);
+        var tempPokemon = pokemonRepository.findById(idPokemon);
         if (tempPokemon.isEmpty()) {
             return null;
         }
@@ -59,7 +64,9 @@ public class PokemonService {
     }
 
     public void addPokemon(PokemonResquestDTO pokemon) {
-        Pokemon pokeAdd = new Pokemon(pokemon);
+        System.out.println("trainer id: " + pokemon.getTrainerId());
+        Trainer trainer = trainerRepository.findById(pokemon.getTrainerId()).get();
+        Pokemon pokeAdd = new Pokemon(pokemon, trainer);
         pokemonRepository.save(pokeAdd);
     }
 

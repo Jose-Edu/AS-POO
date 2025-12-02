@@ -2,25 +2,22 @@ package br.ulbra.AP2.Dto.Requests;
 
 import br.ulbra.AP2.Models.Pokemon;
 import br.ulbra.AP2.Models.Trainer;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 public class PokemonResquestDTO {
     private String name;
     private List<String> type;
-    private Trainer trainer;
+    @JsonProperty("trainer_id")
+    private long trainer_id;
 
     public PokemonResquestDTO() {}
 
-    public PokemonResquestDTO(Pokemon pokemon) {
-        this.name = pokemon.getName();
-        this.type = pokemon.getType();
-        this.trainer = pokemon.getTrainer();
-    }
-
-    public PokemonResquestDTO(String name, List<String> type) {
+    public PokemonResquestDTO(String name, List<String> type, long trainer_id) {
         this.name = name;
         this.type = type;
+        this.trainer_id = trainer_id;
     }
 
     public String getName() {
@@ -39,11 +36,11 @@ public class PokemonResquestDTO {
         this.type = type;
     }
 
-    public Trainer getTrainer() {
-        return trainer;
+    public long getTrainerId() {
+        return trainer_id;
     }
 
-    public void setTrainer(Trainer trainer) {
-        this.trainer = trainer;
+    public void setTrainerId(long trainer_id) {
+        this.trainer_id = trainer_id;
     }
 }
