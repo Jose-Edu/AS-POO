@@ -22,17 +22,15 @@ Antes de começar, você precisará ter instalado em sua máquina:
 - [Git](https://git-scm.com/)
 - [Postman](https://www.postman.com/downloads/) (para testar a API)
 
-## 🔧 Como clonar e executar o projeto
+## Como clonar e executar o projeto
 
 ### 1. Clonar o repositório
 
 ```bash
 git clone https://github.com/Jose-Edu/AS-POO.git
-cd AS-POO ```
-
-### 2. Rodar o projeto
-
-### 3. Executar a aplicação
+cd AS-POO
+```
+### 2. Executar a aplicação
 
 Após clonar o projeto, você pode executar a aplicação usando o Gradle:
 
