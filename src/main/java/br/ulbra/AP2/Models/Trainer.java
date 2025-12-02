@@ -21,11 +21,6 @@ public class Trainer {
 
     }
 
-    public Trainer(String name, List<Pokemon> pokemons) {
-        this.name = name;
-        this.pokemons = pokemons;
-    }
-
     public Trainer(TrainerRequestDTO trainer) {
         this.name = trainer.getName();
         this.pokemons = new ArrayList<>();
