@@ -1,4 +1,4 @@
-# AS-POO - Sistema de Gerenciamento
+# AS-POO
 
 Projeto desenvolvido em Java utilizando Spring Boot e Gradle para a disciplina de Programação Orientada a Objetos.
 
